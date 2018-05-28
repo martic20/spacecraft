@@ -28,10 +28,11 @@ public class GameView extends SurfaceView implements Runnable {
 
     //Creamos un array de enemigos
     private Enemy[] enemies;
+    private Life[] lifes;
 
     //Añadimos 3 enemigos.
     private int enemyCount = 3;
-
+    private int lifeCount =1;
 
 
     //Creamos array de estrellas para darle más vistosidad
@@ -66,6 +67,11 @@ public class GameView extends SurfaceView implements Runnable {
         enemies = new Enemy[enemyCount];
         for(int i=0; i<enemyCount; i++){
             enemies[i] = new Enemy(context, x, y);
+        }
+
+        lifes = new Life[lifeCount];
+        for(int i=0; i<lifeCount; i++){
+            lifes[i] = new Life(context, x, y);
         }
 
         //Creamos el objeto explosión.
@@ -118,6 +124,10 @@ public class GameView extends SurfaceView implements Runnable {
 
         }
 
+        for(int i=0; i<lifeCount; i++){
+            lifes[i].update(player.getSpeed());
+        }
+
     }
 
     private void draw() {
@@ -150,6 +160,15 @@ public class GameView extends SurfaceView implements Runnable {
                         enemies[i].getBitmap(),
                         enemies[i].getX(),
                         enemies[i].getY(),
+                        paint
+                );
+            }
+
+            for (int i = 0; i < lifeCount; i++) {
+                canvas.drawBitmap(
+                        lifes[i].getBitmap(),
+                        lifes[i].getX(),
+                        lifes[i].getY(),
                         paint
                 );
             }
